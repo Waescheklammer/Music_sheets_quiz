@@ -1,23 +1,45 @@
 /*
 ---------------------------------------------------------------------------------------
  								* IST NOCH MACARONI CODE *
+ 								Nur Versuch, noch nichts geordnet nach MVC
  --------------------------------------------------------------------------------------
+
+										TODO
+								*Noten mit Solution verbinden // Anzeige mit Buttonlösung verbinden
+								*Event Listening sortieren
+								
+
+
+
+
  */
 
 
 
 
+
+//FETCH JSON
+const fetchAddr = 'http://192.168.0.108:8000/Modul1.json';
+function fetchRequest(addr){
+					// Replace ./data.json with your JSON feed
+			fetch(addr).then(response => {
+			  return response.json();
+			}).then(data => {
+			  // Work with JSON data here
+				localStorage.setItem("notes", JSON.stringify(data.notes));
+				localStorage.setItem("solution", JSON.stringify(data.solution));
+			}).catch(err => {
+			  // Do something for an error here
+			});
+		}
+
+fetchRequest(fetchAddr);
+
+
 /*
- * Description
- document.addEventListener('click', function(event){
-	if(event.target.matches("choiceButton1"))
-	{
-		console.log("BH");
-	}
-});
-
-
-
+ * -------------------------------------------------------------------
+	VEXFLOW ZEUGS
+	------------------------------------------------------------------
 
 var vf = new Vex.Flow.Factory({
   renderer: {elementId: 'main__renderbody', width: 500, height: 200}
@@ -35,6 +57,11 @@ system.addStave({
 
 vf.draw();
  */
+
+
+
+//Button text randomization
+
 function shuffle(arra1) {
     var ctr = arra1.length, temp, index;
     while (ctr > 0) {
@@ -46,6 +73,7 @@ function shuffle(arra1) {
     }
     return arra1;
 }
+
 
 var randomChoice = [0,1,2,3];
 randomChoice = shuffle(randomChoice);
@@ -62,39 +90,76 @@ function randomizeChoiceButtons(buttons, randomDec){
 randomizeChoiceButtons(buttons, randomChoice);
 
 
-var json = {
-	"notes": ["A", "C", "B", "C", "J"],
-	"solution": [1,2,3,0,1]
-};
 
-function fetchRequest(){
-					// Replace ./data.json with your JSON feed
-			fetch('http://192.168.0.108:8000/Modul1.json').then(response => {
-			  return response.json();
-			}).then(data => {
-			  // Work with JSON data here
-				localStorage.setItem("notes", JSON.stringify(data.notes));
-				localStorage.setItem("solution", JSON.stringify(data.solution));
-			}).catch(err => {
-			  // Do something for an error here
-			});
-		}
 
-fetchRequest();
+//----------------------------------
+//			Eventlisteners
+//----------------------------------
+//
+//
+//Funktioniert noch nichts
+//
 
+
+//Iterate through solution object-localstorage
+let solutionIndex = 0;
+let solutionValue = JSON.parse(localStorage.getItem("solution"));
+
+function renderRenderbody(solutionIndex){
+	let textArr=JSON.parse(localStorage.getItem("notes"));
+	document.getElementById("renderParagraph").innerHTML= textArr[solutionIndex];
+}
+function nextSolutionIndex(solutionIndex){
+	let index = solutionIndex+1;
+	return index;
+}
+renderRenderbody(solutionIndex);
 document.getElementById(buttons[0]).addEventListener('click', function(){
-	var h = JSON.parse(localStorage.getItem("solution"));
-	if (this.innerHTML === h[1]) {console.log("RICHTIG")}
-		else{console.log("FALSCH" +h[1]);}
-
-});
-
-
-
-window.addEventListener('click', function(event){
-	if(event.target.id === buttons[0]){
-		var h = JSON.parse(localStorage.getItem("solution"));
-		if (this.innerHTML === h[1]) {console.log("RICHTIG")}
-		else{console.log("FALSCH" +h[1]);}
+	if (this.innerHTML === solutionValue[solutionIndex]) {
+		randomChoice = shuffle(randomChoice);
+		randomizeChoiceButtons(buttons, randomChoice);
+		solutionIndex=nextSolutionIndex(solutionIndex);
+		document.getElementById("progress").value += 10;
+		renderRenderbody(solutionIndex);
 	}
+		else{console.log("FALSCH" +solutionValue[solutionIndex]);}
+
 });
+document.getElementById(buttons[1]).addEventListener('click', function(){
+	var h = JSON.parse(localStorage.getItem("solution"));
+	if (this.innerHTML === solutionValue[solutionIndex]) {
+		randomChoice = shuffle(randomChoice);
+		randomizeChoiceButtons(buttons, randomChoice);
+		solutionIndex=nextSolutionIndex(solutionIndex);
+		document.getElementById("progress").value += 10;
+		renderRenderbody(solutionIndex);
+	}
+		else{console.log("FALSCH" +solutionValue[solutionIndex]);}
+
+});
+document.getElementById(buttons[2]).addEventListener('click', function(){
+	var h = JSON.parse(localStorage.getItem("solution"));
+	if (this.innerHTML === solutionValue[solutionIndex]) {
+		randomChoice = shuffle(randomChoice);
+		randomizeChoiceButtons(buttons, randomChoice);
+		solutionIndex=nextSolutionIndex(solutionIndex);
+		document.getElementById("progress").value += 10;
+		renderRenderbody(solutionIndex);
+	}
+		else{console.log("FALSCH" +solutionValue[solutionIndex]);}
+
+});
+document.getElementById(buttons[3]).addEventListener('click', function(){
+	var h = JSON.parse(localStorage.getItem("solution"));
+	if (this.innerHTML === solutionValue[solutionIndex]) {
+		randomChoice = shuffle(randomChoice);
+		randomizeChoiceButtons(buttons, randomChoice);
+		solutionIndex=nextSolutionIndex(solutionIndex);
+		document.getElementById("progress").value += 10;
+		renderRenderbody(solutionIndex);
+	}
+		else{console.log("FALSCH" +solutionValue[solutionIndex]);}
+
+});
+
+
