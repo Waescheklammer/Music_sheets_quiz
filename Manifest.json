@@ -1,0 +1,14 @@
+{
+  "name": "Noten",
+  "short_name": "Noten",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color" : "#F8F8F8" ,
+  "theme_color" : "#3BB6BF",
+  "description": "Noten",
+  "Icons": [{
+    "src": "./icon.png",
+    "sizes": "350x350",
+    "type": "image/png"
+  }]
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Akkorde lernen</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="manifest" href="Manifest.json">
+	<link rel="icon" type="image/png" href="icon.png">
+	<meta name="theme-color" content="transparent">
+	<script type="text/javascript" src="node_modules/vexflow/releases/vexflow-min.js"></script>
+</head>
+<body>
+	<section id="container">
+		<header id="header">
+			<h1>Noten</h1>
+		</header>
+		<main "id="main">
+			<div class="main__progressbox">
+				<progress value="80" max="100" class="main__progressbar"></progress>
+			</div>
+			<div class="main__form">
+				<form>
+					<select >
+						<option hidden="true">Modul</option>
+						<option>Violinschlüssel</option>
+						<option>Bassschlüssel</option>
+					</select>
+				</form>
+			</div>
+			<div class="main__renderbody" id="main__renderbody">
+				<canvas id="renderbody"></canvas>
+			</div>
+			<hr>
+			<h2>Wählen sie eine Lösungsmöglichkeit aus</h2>
+			<div class="main__choicebox">
+				<button class="choiceButton1" id="choiceButton1">A</button>
+				<button class="choiceButton2" id="choiceButton2">B</button>
+				<button class="choiceButton3" id="choiceButton3">C</button>
+				<button class="choiceButton4" id="choiceButton4">D</button>
+			</div>
+		</main>
+		<section id="ad">
+		<h2>WERBUNG</h2>
+		</section>
+		<footer id="footer">
+			<ul>
+				<li><a href="">Impressum</a></li>
+				<li><a href="">Kontakt</a></li>
+				<li><a href="">Service</a></li>
+				<li><button id="footerButton">Add To Homescreen</button></li>
+			</ul>
+		</footer>
+	</section>
+	<script type="text/javascript" src="index.js"></script>
+</body>
+</html>
