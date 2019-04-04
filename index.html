@@ -7,7 +7,6 @@
 	<link rel="manifest" href="Manifest.json">
 	<link rel="icon" type="image/png" href="icon.png">
 	<meta name="theme-color" content="transparent">
-	<script type="text/javascript" src="node_modules/vexflow/releases/vexflow-min.js"></script>
 </head>
 <body>
 	<section id="container">
@@ -15,29 +14,45 @@
 			<h1>Noten</h1>
 		</header>
 		<main "id="main">
-			<div class="main__progressbox">
-				<progress value="80" max="100" class="main__progressbar"></progress>
-			</div>
-			<div class="main__form">
-				<form>
-					<select >
-						<option hidden="true">Modul</option>
-						<option>Violinschlüssel</option>
-						<option>Bassschlüssel</option>
-					</select>
-				</form>
-			</div>
-			<div class="main__renderbody" id="main__renderbody">
-				<canvas id="renderbody"></canvas>
-			</div>
-			<hr>
-			<h2>Wählen sie eine Lösungsmöglichkeit aus</h2>
-			<div class="main__choicebox">
-				<button class="choiceButton1" id="choiceButton1">A</button>
-				<button class="choiceButton2" id="choiceButton2">B</button>
-				<button class="choiceButton3" id="choiceButton3">C</button>
-				<button class="choiceButton4" id="choiceButton4">D</button>
-			</div>
+			<section id="main__menu" class="">
+				<h2>Wähle ein Modul</h2>
+				<div id="menu__container" class="menu__container">
+					<div class="menu__form">
+						<form >
+							<select id="menuform">
+								<option hidden="true">Modul</option>
+								<option>Violinschlüssel</option>
+								<option>Bassschlüssel</option>
+							</select>
+						</form>
+					</div>
+					<button id="form_button" class="">Start</button>
+				</div>
+			</section>
+			<section id="main__quiz" class="hidden">
+				<div class="quiz__progressbox">
+					<progress id="progress" value="0" max="40" class="quiz__progressbar"></progress>
+				</div>
+				<div class="quiz__renderbody" id="quiz__renderbody">
+					<p style="text-align:center; font-size:5rem;"  id="renderParagraph"></p>
+					<canvas id="renderbody"></canvas>
+				</div>
+				<hr>
+				<h2>Wählen sie eine Lösungsmöglichkeit aus</h2>
+				<div class="main__choicebox">
+					<button class="choiceButton1" id="choiceButton1">A</button>
+					<button class="choiceButton2" id="choiceButton2">B</button>
+					<button class="choiceButton3" id="choiceButton3">C</button>
+					<button class="choiceButton4" id="choiceButton4">D</button>
+				</div>
+			</section>
+			<section id="main__statistic" class="hidden">
+				<div id="statistic__container">
+					<h2>Dein Ergebnis</h2>
+					<span></span>
+					<button class="statistic__button" id="statistic__button">Zurück zum Menu </button>
+				</div>
+			</section>
 		</main>
 		<section id="ad">
 		<h2>WERBUNG</h2>
