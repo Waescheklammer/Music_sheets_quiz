@@ -1,3 +1,4 @@
+"use strict";
 /*
 ---------------------------------------------------------------------------------------
  								* IST NOCH MACARONI CODE *
@@ -5,7 +6,10 @@
  --------------------------------------------------------------------------------------
 
 										TODO
-
+								*Zurücksetzen
+								*Noten anzeigen/Mit Lösungen verbinden
+								*Event Listening sortieren
+								
 
 
 
@@ -13,13 +17,11 @@
  */
 
 
-
-
-
 //FETCH JSON
+const tempfetchAddr= 'http://141.56.236.191:8000/Modul1.json';
 const fetchAddr = 'http://192.168.0.108:8000/Modul1.json';
 function fetchRequest(addr){
-					// Replace ./data.json with your JSON feed
+			// Replace ./data.json with your JSON feed
 			fetch(addr).then(response => {
 			  return response.json();
 			}).then(data => {
@@ -94,57 +96,114 @@ randomizeChoiceButtons(buttons, randomChoice);
 //			Eventlisteners
 //----------------------------------
 //
-//umschalten zur nächsten Aufgabe / nächsten Elemente in JSON
+//
 //Funktioniert noch nichts
 //
+
+
+//Iterate through solution object-localstorage
 let solutionIndex = 0;
 let solutionValue = JSON.parse(localStorage.getItem("solution"));
+
+function renderRenderbody(solutionIndex){
+	let textArr=JSON.parse(localStorage.getItem("notes"));
+	document.getElementById("renderParagraph").innerHTML= textArr[solutionIndex];
+}
 function nextSolutionIndex(solutionIndex){
-	let index = solutionIndex++;
+	let index = solutionIndex+1;
 	return index;
 }
-
-
-
-
+renderRenderbody(solutionIndex);
 document.getElementById(buttons[0]).addEventListener('click', function(){
 	if (this.innerHTML === solutionValue[solutionIndex]) {
-		randomChoice = shuffle(randomChoice);
-		randomizeChoiceButtons(buttons, randomChoice);
-		nextSolutionIndex(solutionIndex);
-}
-		else{console.log("FALSCH" +h[1]);}
+		if(solutionIndex === 3){
+			document.getElementById("main__quiz").classList.add("hidden");
+			document.getElementById("main__statistic").classList.remove("hidden");	
+		}
+		else
+		{
+			randomChoice = shuffle(randomChoice);
+			randomizeChoiceButtons(buttons, randomChoice);
+			solutionIndex=nextSolutionIndex(solutionIndex);
+			document.getElementById("progress").value += 10;
+			renderRenderbody(solutionIndex);
+		}
+	}
+		else{console.log("FALSCH" +solutionValue[solutionIndex]);}
 
 });
 document.getElementById(buttons[1]).addEventListener('click', function(){
 	var h = JSON.parse(localStorage.getItem("solution"));
 	if (this.innerHTML === solutionValue[solutionIndex]) {
-		randomChoice = shuffle(randomChoice);
-		randomizeChoiceButtons(buttons, randomChoice);
-		nextSolutionIndex(solutionIndex);
-}
-		else{console.log("FALSCH" +h[1]);}
+		if(solutionIndex === 3){
+			document.getElementById("main__quiz").classList.add("hidden");
+			document.getElementById("main__statistic").classList.remove("hidden");	
+		}
+		else
+		{
+			randomChoice = shuffle(randomChoice);
+			randomizeChoiceButtons(buttons, randomChoice);
+			solutionIndex=nextSolutionIndex(solutionIndex);
+			document.getElementById("progress").value += 10;
+			renderRenderbody(solutionIndex);
+		}
+	}
+		else{console.log("FALSCH" +solutionValue[solutionIndex]);}
 
 });
 document.getElementById(buttons[2]).addEventListener('click', function(){
 	var h = JSON.parse(localStorage.getItem("solution"));
 	if (this.innerHTML === solutionValue[solutionIndex]) {
-		randomChoice = shuffle(randomChoice);
-		randomizeChoiceButtons(buttons, randomChoice);
-		nextSolutionIndex(solutionIndex);
-}
-		else{console.log("FALSCH" +h[1]);}
+		if(solutionIndex === 3){
+			document.getElementById("main__quiz").classList.add("hidden");
+			document.getElementById("main__statistic").classList.remove("hidden");	
+		}
+		else
+		{
+			randomChoice = shuffle(randomChoice);
+			randomizeChoiceButtons(buttons, randomChoice);
+			solutionIndex=nextSolutionIndex(solutionIndex);
+			document.getElementById("progress").value += 10;
+			renderRenderbody(solutionIndex);
+		}
+	}
+		else{console.log("FALSCH" +solutionValue[solutionIndex]);}
 
 });
 document.getElementById(buttons[3]).addEventListener('click', function(){
 	var h = JSON.parse(localStorage.getItem("solution"));
 	if (this.innerHTML === solutionValue[solutionIndex]) {
-		randomChoice = shuffle(randomChoice);
-		randomizeChoiceButtons(buttons, randomChoice);
-		nextSolutionIndex(solutionIndex);
-}
-		else{console.log("FALSCH" +h[1]);}
+		if(solutionIndex === 3){
+			document.getElementById("main__quiz").classList.add("hidden");
+			document.getElementById("main__statistic").classList.remove("hidden");	
+		}
+		else
+		{
+			randomChoice = shuffle(randomChoice);
+			randomizeChoiceButtons(buttons, randomChoice);
+			solutionIndex=nextSolutionIndex(solutionIndex);
+			document.getElementById("progress").value += 10;
+			renderRenderbody(solutionIndex);
+		}
+	}
+		else{console.log("FALSCH" +solutionValue[solutionIndex]);}
 
 });
 
 
+document.getElementById("form_button").addEventListener('click', () =>{
+	var sel = document.getElementById("menuform").value;
+	if (sel !== 'Modul') {
+		document.getElementById("main__menu").classList.add("hidden");
+		document.getElementById("main__quiz").classList.remove("hidden");
+	}
+	else
+	{
+		document.getElementById("menuform").classList.add("main__choicebox--redLine");
+	}
+})
+
+document.getElementById("statistic__button").addEventListener('click', () =>{
+	document.getElementById("main__menu").classList.remove("hidden");
+	document.getElementById("main__statistic").classList.add("hidden");
+});
