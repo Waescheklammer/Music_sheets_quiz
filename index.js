@@ -5,11 +5,16 @@
  								Nur Versuch, noch nichts geordnet nach MVC
  --------------------------------------------------------------------------------------
 
+
 										TODO
-								*Zurücksetzen
-								*Noten anzeigen/Mit Lösungen verbinden
+								*Noten mit Solution verbinden // Anzeige mit Buttonlösung verbinden
 								*Event Listening sortieren
 								
+
+
+
+
+ */
 
 
 
@@ -22,6 +27,7 @@ const tempfetchAddr= 'http://141.56.236.191:8000/Modul1.json';
 const fetchAddr = 'http://192.168.0.108:8000/Modul1.json';
 function fetchRequest(addr){
 			// Replace ./data.json with your JSON feed
+
 			fetch(addr).then(response => {
 			  return response.json();
 			}).then(data => {
@@ -116,18 +122,7 @@ function nextSolutionIndex(solutionIndex){
 renderRenderbody(solutionIndex);
 document.getElementById(buttons[0]).addEventListener('click', function(){
 	if (this.innerHTML === solutionValue[solutionIndex]) {
-		if(solutionIndex === 3){
-			document.getElementById("main__quiz").classList.add("hidden");
-			document.getElementById("main__statistic").classList.remove("hidden");	
-		}
-		else
-		{
-			randomChoice = shuffle(randomChoice);
-			randomizeChoiceButtons(buttons, randomChoice);
-			solutionIndex=nextSolutionIndex(solutionIndex);
-			document.getElementById("progress").value += 10;
-			renderRenderbody(solutionIndex);
-		}
+
 	}
 		else{console.log("FALSCH" +solutionValue[solutionIndex]);}
 
@@ -135,6 +130,7 @@ document.getElementById(buttons[0]).addEventListener('click', function(){
 document.getElementById(buttons[1]).addEventListener('click', function(){
 	var h = JSON.parse(localStorage.getItem("solution"));
 	if (this.innerHTML === solutionValue[solutionIndex]) {
+
 		if(solutionIndex === 3){
 			document.getElementById("main__quiz").classList.add("hidden");
 			document.getElementById("main__statistic").classList.remove("hidden");	
@@ -147,6 +143,7 @@ document.getElementById(buttons[1]).addEventListener('click', function(){
 			document.getElementById("progress").value += 10;
 			renderRenderbody(solutionIndex);
 		}
+
 	}
 		else{console.log("FALSCH" +solutionValue[solutionIndex]);}
 
@@ -154,6 +151,7 @@ document.getElementById(buttons[1]).addEventListener('click', function(){
 document.getElementById(buttons[2]).addEventListener('click', function(){
 	var h = JSON.parse(localStorage.getItem("solution"));
 	if (this.innerHTML === solutionValue[solutionIndex]) {
+
 		if(solutionIndex === 3){
 			document.getElementById("main__quiz").classList.add("hidden");
 			document.getElementById("main__statistic").classList.remove("hidden");	
@@ -166,6 +164,7 @@ document.getElementById(buttons[2]).addEventListener('click', function(){
 			document.getElementById("progress").value += 10;
 			renderRenderbody(solutionIndex);
 		}
+
 	}
 		else{console.log("FALSCH" +solutionValue[solutionIndex]);}
 
@@ -173,6 +172,7 @@ document.getElementById(buttons[2]).addEventListener('click', function(){
 document.getElementById(buttons[3]).addEventListener('click', function(){
 	var h = JSON.parse(localStorage.getItem("solution"));
 	if (this.innerHTML === solutionValue[solutionIndex]) {
+
 		if(solutionIndex === 3){
 			document.getElementById("main__quiz").classList.add("hidden");
 			document.getElementById("main__statistic").classList.remove("hidden");	
@@ -185,6 +185,7 @@ document.getElementById(buttons[3]).addEventListener('click', function(){
 			document.getElementById("progress").value += 10;
 			renderRenderbody(solutionIndex);
 		}
+
 	}
 		else{console.log("FALSCH" +solutionValue[solutionIndex]);}
 
@@ -207,3 +208,4 @@ document.getElementById("statistic__button").addEventListener('click', () =>{
 	document.getElementById("main__menu").classList.remove("hidden");
 	document.getElementById("main__statistic").classList.add("hidden");
 });
+
