@@ -106,7 +106,7 @@ progress[value]::-webkit-progress-value {
 }
 .menu__container> button{
 	grid-area: 'button';
-	background-color: #F39237;
+	background-color: #F2C037;
 	border-radius: 10px;
 	font-size: 2.5rem;
 	font-weight: bold;
@@ -124,8 +124,8 @@ progress[value]::-webkit-progress-value {
 .main__choicebox{
 	margin-top: 10%;
 	display: grid;
-	grid-template-columns: 30% 30%;
-	grid-template-rows: 90% 90%;
+	grid-template-columns: 40% 40%;
+	grid-template-rows: 110% 110%;
 	grid-template-areas: 
 		'B1 B2'
 		'B3 B4';
@@ -144,12 +144,13 @@ progress[value]::-webkit-progress-value {
 }
 .main__choicebox>button:active{
 	font-weight: bold;
-	background-color: #3BB6BF;
+	background-color: #F2C037;
 }
 .choiceButton1{grid-area: B1}
 .choiceButton2{grid-area: B2}
 .choiceButton3{grid-area: B3}
 .choiceButton4{grid-area: B4}
+
 #main__statistic{
 	height: 70%;
 }
@@ -176,6 +177,9 @@ progress[value]::-webkit-progress-value {
 	border-radius: 10px;
 	font-size: 3rem;
 	color: white;
+}
+.statistic__button:active{
+	background-color: #F2C037;
 }
 #ad{
 	grid-area: ad;
