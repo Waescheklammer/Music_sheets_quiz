@@ -1,3 +1,4 @@
+"use strict";
 /*
 ---------------------------------------------------------------------------------------
  								* IST NOCH MACARONI CODE *
@@ -5,27 +6,37 @@
  --------------------------------------------------------------------------------------
 
 										TODO
-								*Noten mit Solution verbinden // Anzeige mit Buttonlösung verbinden
-								*Event Listening sortieren
-								
-
-
-
-
+								*Promise für Installation + Button
+								*Button LösungenText
+								*Noten anzeigen/Mit Lösungen verbinden
+								*Desktop CSS Layout
  */
 
+let menu = document.getElementById("main__menu");
+let quiz = document.getElementById("main__quiz");
+let form = document.getElementById("menuform");
+let stat = document.getElementById("main__statistic");
+let choice = document.getElementById("main__choicebox");
+let jP = document.getElementById("Jens"); //Span Pseudo-Element für Text der Statistikanzeige
+let progBar = document.getElementById("progress");
+
+let randomChoice = [0,1,2,3];
+let buttons=["choiceButton1", "choiceButton2", "choiceButton3", "choiceButton4"];
+
+let solutionIndex = 0; //Fragen/Antworten-Katalog Index
+let Correct=0; //Richtige Antwortenzähler
 
 
+//---------------------------
+//			FETCH JSON
+//---------------------------
 
-
-//FETCH JSON
-const fetchAddr = 'http://192.168.0.108:8000/Modul1.json';
+const tempfetchAddr= 'http://141.56.236.191:8000/Modul1.json'; 
+const fetchAddr = 'http://192.168.0.108:8000/Modul1.json'; //IP Adresse von Hostserver(lokaler Webserver)
 function fetchRequest(addr){
-					// Replace ./data.json with your JSON feed
 			fetch(addr).then(response => {
 			  return response.json();
 			}).then(data => {
-			  // Work with JSON data here
 				localStorage.setItem("notes", JSON.stringify(data.notes));
 				localStorage.setItem("solution", JSON.stringify(data.solution));
 			}).catch(err => {
@@ -33,35 +44,14 @@ function fetchRequest(addr){
 			});
 		}
 
+
 fetchRequest(fetchAddr);
 
+//---------------------------
+//		Render Buttons
+//---------------------------
 
-/*
- * -------------------------------------------------------------------
-	VEXFLOW ZEUGS
-	------------------------------------------------------------------
-
-var vf = new Vex.Flow.Factory({
-  renderer: {elementId: 'main__renderbody', width: 500, height: 200}
-});
-
-var score = vf.EasyScore();
-var system = vf.System();
-
-system.addStave({
-  voices: [
-    score.voice(score.notes('C#5/q, B3, A3, G#3', {stem: 'up'})),
-    score.voice(score.notes('C#4/h, C#4', {stem: 'down'}))
-  ]
-}).addClef('treble').addTimeSignature('4/4').setStyle({strokeStyle: "blue"});
-
-vf.draw();
- */
-
-
-
-//Button text randomization
-
+//random anordnen von Button-Text-Array ( Heißt anscheinend shuffling)
 function shuffle(arra1) {
     var ctr = arra1.length, temp, index;
     while (ctr > 0) {
@@ -74,14 +64,11 @@ function shuffle(arra1) {
     return arra1;
 }
 
-
-var randomChoice = [0,1,2,3];
 randomChoice = shuffle(randomChoice);
-var buttons=["choiceButton1", "choiceButton2", "choiceButton3", "choiceButton4"];
 
-
+//Rendert Buttontexte zufällig an
 function randomizeChoiceButtons(buttons, randomDec){
-	var choices=["A", "B", "C", "D"];
+	let choices=["A", "B", "C", "D"];
 	for(let i=0; i< buttons.length; ++i){
 		document.getElementById(buttons[i]).innerHTML=choices[randomDec[i]];
 	}	
@@ -92,74 +79,106 @@ randomizeChoiceButtons(buttons, randomChoice);
 
 
 
-//----------------------------------
-//			Eventlisteners
-//----------------------------------
-//
-//
-//Funktioniert noch nichts
-//
+//---------------------------
+//		Note rendering
+//---------------------------
 
 
-//Iterate through solution object-localstorage
-let solutionIndex = 0;
-let solutionValue = JSON.parse(localStorage.getItem("solution"));
-
+//Rendert (später) Notenanzeige
 function renderRenderbody(solutionIndex){
 	let textArr=JSON.parse(localStorage.getItem("notes"));
 	document.getElementById("renderParagraph").innerHTML= textArr[solutionIndex];
 }
-function nextSolutionIndex(solutionIndex){
-	let index = solutionIndex+1;
-	return index;
-}
+
 renderRenderbody(solutionIndex);
-document.getElementById(buttons[0]).addEventListener('click', function(){
-	if (this.innerHTML === solutionValue[solutionIndex]) {
+
+
+//---------------------------
+//		EventListeners
+//---------------------------
+
+let solutionValue = JSON.parse(localStorage.getItem("solution"));
+
+//Setzt nächsten Rendering Content zusammen/ wechselt zur nächsten Seite & summiert richtige Antworten
+function handleButton(event){
+	let h = JSON.parse(localStorage.getItem("solution"));
+
+	let lastPage = () => {
+		jP.innerHTML = Correct +"/4";
+		quiz.classList.add("hidden");
+		stat.classList.remove("hidden");	
+	}
+
+	let nextPage = () =>{
 		randomChoice = shuffle(randomChoice);
 		randomizeChoiceButtons(buttons, randomChoice);
-		solutionIndex=nextSolutionIndex(solutionIndex);
-		document.getElementById("progress").value += 10;
+		solutionIndex+=1;
+		progBar.value += 10;
 		renderRenderbody(solutionIndex);
 	}
-		else{console.log("FALSCH" +solutionValue[solutionIndex]);}
 
-});
-document.getElementById(buttons[1]).addEventListener('click', function(){
-	var h = JSON.parse(localStorage.getItem("solution"));
-	if (this.innerHTML === solutionValue[solutionIndex]) {
-		randomChoice = shuffle(randomChoice);
-		randomizeChoiceButtons(buttons, randomChoice);
-		solutionIndex=nextSolutionIndex(solutionIndex);
-		document.getElementById("progress").value += 10;
+
+	if (event === solutionValue[solutionIndex]) {
+		if(solutionIndex === 3){
+			Correct+=1;
+			lastPage();	
+		}
+		else
+		{
+			Correct+=1;
+			nextPage();
+		}
+	}
+	else{
+		if(solutionIndex === 3){lastPage();}
+		else
+		{nextPage();}
+	}
+}
+
+//Start Button
+document.getElementById("form_button").addEventListener('click', () =>{
+	var sel = document.getElementById("menuform").value;
+	if (sel !== 'Modul') {
+		menu.classList.add("hidden");
+		quiz.classList.remove("hidden");
 		renderRenderbody(solutionIndex);
 	}
-		else{console.log("FALSCH" +solutionValue[solutionIndex]);}
-
-});
-document.getElementById(buttons[2]).addEventListener('click', function(){
-	var h = JSON.parse(localStorage.getItem("solution"));
-	if (this.innerHTML === solutionValue[solutionIndex]) {
-		randomChoice = shuffle(randomChoice);
-		randomizeChoiceButtons(buttons, randomChoice);
-		solutionIndex=nextSolutionIndex(solutionIndex);
-		document.getElementById("progress").value += 10;
-		renderRenderbody(solutionIndex);
+	else
+	{
+		form.classList.add("main__choicebox--redLine");
 	}
-		else{console.log("FALSCH" +solutionValue[solutionIndex]);}
+})
 
+//Restart Button
+document.getElementById("statistic__button").addEventListener('click', () =>{
+	menu.classList.remove("hidden");
+	stat.classList.add("hidden");
+	form.value="Modul";
+	form.classList.remove("main__choicebox--redLine");
+	solutionIndex=0;
+	Correct=0;
+	progBar.value="0";
 });
-document.getElementById(buttons[3]).addEventListener('click', function(){
-	var h = JSON.parse(localStorage.getItem("solution"));
-	if (this.innerHTML === solutionValue[solutionIndex]) {
-		randomChoice = shuffle(randomChoice);
-		randomizeChoiceButtons(buttons, randomChoice);
-		solutionIndex=nextSolutionIndex(solutionIndex);
-		document.getElementById("progress").value += 10;
-		renderRenderbody(solutionIndex);
+
+// Quiz Buttons
+document.getElementById("main__choicebox").addEventListener('click', function(event){
+	let elem = event.target.id;
+
+	if(elem === buttons[0]){
+		let buttonText = document.getElementById(buttons[0]).innerHTML;
+		handleButton(buttonText);
 	}
-		else{console.log("FALSCH" +solutionValue[solutionIndex]);}
-
+	if(elem === buttons[1]){
+		let buttonText = document.getElementById(buttons[1]).innerHTML;
+		handleButton(buttonText);
+	}
+	if(elem === buttons[2]){
+		let buttonText = document.getElementById(buttons[2]).innerHTML;
+		handleButton(buttonText);
+	}
+	if(elem === buttons[3]){
+		let buttonText = document.getElementById(buttons[3]).innerHTML;
+		handleButton(buttonText);
+	}
 });
-
-
