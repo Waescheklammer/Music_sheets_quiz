@@ -27,6 +27,7 @@ let solutionIndex = 0; //Fragen/Antworten-Katalog Index
 let Correct=0; //Richtige Antwortenzähler
 
 
+
 //---------------------------
 //			FETCH JSON
 //---------------------------
@@ -46,6 +47,8 @@ function fetchRequest(addr){
 
 
 fetchRequest(fetchAddr);
+
+
 
 //---------------------------
 //		Render Buttons
@@ -83,6 +86,51 @@ randomizeChoiceButtons(buttons, randomChoice);
 //		Note rendering
 //---------------------------
 
+//VF = Vex.Flow;
+
+// Create an SVG renderer and attach it to the DIV element named "boo".
+var canvas = document.getElementById("VexBody")
+//var renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
+var renderer = new Vex.Flow.Renderer(canvas, Vex.Flow.Renderer.Backends.CANVAS);
+
+// Configure the rendering context.
+renderer.resize(410, 410); //in CSS class für responsive 100%
+var context = renderer.getContext();
+context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
+
+// Create a stave of width 400 at position 10, 40 on the canvas.
+var stave = new Vex.Flow.Stave(10, 40, 370); //Beeiflusst ebenfalls die Groeße
+
+// Add a clef and time signature.
+stave.addClef("treble");//.addTimeSignature("4/4"); //addClef("bass")
+
+// Connect it to the rendering context and draw!
+stave.setContext(context).draw();
+
+var notes = [
+  // A quarter-note C.
+  new Vex.Flow.StaveNote({clef: "treble", keys: ["c/4"], duration: "q" }),
+
+  // A quarter-note D.
+  new Vex.Flow.StaveNote({clef: "treble", keys: ["d/4"], duration: "q" }),
+
+  // A quarter-note rest. Note that the key (b/4) specifies the vertical
+  // position of the rest.
+  new Vex.Flow.StaveNote({clef: "treble", keys: ["b/4"], duration: "q" }),
+
+  // A C-Major chord.
+  new Vex.Flow.StaveNote({clef: "treble", keys: ["c/4", "e/4", "g/4"], duration: "q" })
+];
+
+// Create a voice in 4/4 and add above notes
+var voice = new Vex.Flow.Voice({num_beats: 4,  beat_value: 4});
+voice.addTickables(notes);
+
+// Format and justify the notes to 400 pixels.
+var formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 400);
+
+// Render voice
+voice.draw(context, stave);
 
 //Rendert (später) Notenanzeige
 function renderRenderbody(solutionIndex){
@@ -91,6 +139,7 @@ function renderRenderbody(solutionIndex){
 }
 
 renderRenderbody(solutionIndex);
+
 
 
 //---------------------------
@@ -125,7 +174,7 @@ function handleButton(event){
 		}
 		else
 		{
-			Correct+=1;
+			Correct+=1; //BUG?
 			nextPage();
 		}
 	}

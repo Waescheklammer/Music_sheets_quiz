@@ -7,14 +7,15 @@
 	<link rel="manifest" href="Manifest.json">
 	<link rel="icon" type="image/png" href="icon.png">
 	<meta name="theme-color" content="transparent">
+	<script type="text/javascript" src="https://unpkg.com/vexflow/releases/vexflow-min.js"></script>
 </head>
 <body>
 	<section id="container">
 		<header id="header">
 			<h1>Noten</h1>
 		</header>
-		<main "id="main">
-			<section id="main__menu" class="">
+		<main id="main">
+			<section id="main__menu" class=""> 
 				<h2>Wähle ein Modul</h2>
 				<div id="menu__container" class="menu__container">
 					<div class="menu__form">
@@ -29,14 +30,13 @@
 					<button id="form_button" class="">Start</button>
 				</div>
 			</section>
-			<section id="main__quiz" class="hidden">
+			<section id="main__quiz" class="hidden"><!--Entfernen falls Startbutton-->
 				<div class="quiz__progressbox">
 					<progress id="progress" value="0" max="40" class="quiz__progressbar"></progress>
 				</div>
-				<div class="quiz__renderbody" id="quiz__renderbody">
-					<p style="text-align:center; font-size:5rem;"  id="renderParagraph"></p>
-					<canvas id="renderbody"></canvas>
-				</div>
+				<!--<div id="quiz__renderbody" class="quiz__renderbody"></div>
+					<p style="text-align:center; font-size:5rem;"  id="renderParagraph"></p>-->
+				<canvas id="VexBody"></canvas> <!--FensterGroeße macht noch Probleme-->
 				<hr>
 				<h2>Wählen sie eine Lösungsmöglichkeit aus</h2>
 				<div class="main__choicebox" id="main__choicebox">
@@ -54,17 +54,14 @@
 				</div>
 			</section>
 		</main>
-		<section id="ad">
-			<h2>WERBUNG</h2>
-		</section>
-		<footer id="footer">
+		<!--<footer id="footer">
 			<ul>
 				<li><a href="">Impressum</a></li>
 				<li><a href="">Kontakt</a></li>
 				<li><a href="">Service</a></li>
 				<li><button id="footerButton" >Add To Homescreen</button></li>
 			</ul>
-		</footer>
+		</footer>-->
 	</section>
 	<script type="text/javascript" src="index.js"></script>
 </body>

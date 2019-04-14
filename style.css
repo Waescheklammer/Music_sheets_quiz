@@ -114,9 +114,8 @@ progress[value]::-webkit-progress-value {
 	padding: 30px;
 	margin-bottom:  20%;
 }
-#main__quiz{
+#main__quiz{}
 
-}
 .quiz__renderbody{
 	margin-top: 30%;
 	height: 80%;
