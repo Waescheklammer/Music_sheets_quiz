@@ -10,6 +10,9 @@
 								*Button LösungenText
 								*Noten anzeigen/Mit Lösungen verbinden
 								*Desktop CSS Layout
+								*ASYNC Event listeners -> nicht synchron mit fetch
+									-> Hat keine daten, feuert bevor fetch geladen wird
+								*BUG:bei zweitem durchlauf komisches verhalten
  */
 
 let menu = document.getElementById("main__menu");
@@ -39,13 +42,15 @@ function fetchRequest(addr){
 			}).then(data => {
 				localStorage.setItem("notes", JSON.stringify(data.notes));
 				localStorage.setItem("solution", JSON.stringify(data.solution));
+				insertFirstPage();
+				responseButtons();
 			}).catch(err => {
 			  // Do something for an error here
 			});
 		}
 
 
-fetchRequest(fetchAddr);
+//fetchRequest(fetchAddr);
 
 //---------------------------
 //		Render Buttons
@@ -74,7 +79,6 @@ function randomizeChoiceButtons(buttons, randomDec){
 	}	
 }
 
-randomizeChoiceButtons(buttons, randomChoice);
 
 
 
@@ -89,8 +93,7 @@ function renderRenderbody(solutionIndex){
 	let textArr=JSON.parse(localStorage.getItem("notes"));
 	document.getElementById("renderParagraph").innerHTML= textArr[solutionIndex];
 }
-
-renderRenderbody(solutionIndex);
+//Überspring 2 und 3
 
 
 //---------------------------
@@ -102,7 +105,7 @@ let solutionValue = JSON.parse(localStorage.getItem("solution"));
 //Setzt nächsten Rendering Content zusammen/ wechselt zur nächsten Seite & summiert richtige Antworten
 function handleButton(event){
 	let h = JSON.parse(localStorage.getItem("solution"));
-
+	console.log(solutionIndex);
 	let lastPage = () => {
 		jP.innerHTML = Correct +"/4";
 		quiz.classList.add("hidden");
@@ -117,11 +120,11 @@ function handleButton(event){
 		renderRenderbody(solutionIndex);
 	}
 
-
 	if (event === solutionValue[solutionIndex]) {
 		if(solutionIndex === 3){
 			Correct+=1;
-			lastPage();	
+			lastPage();
+			solutionIndex=0;	
 		}
 		else
 		{
@@ -130,25 +133,43 @@ function handleButton(event){
 		}
 	}
 	else{
-		if(solutionIndex === 3){lastPage();}
+		if(solutionIndex === 3){lastPage();
+			solutionIndex=0;
+		}
 		else
-		{nextPage();}
+		{
+			nextPage();
+		}
 	}
 }
 
+function insertFirstPage(){
+	menu.classList.add("hidden");
+	quiz.classList.remove("hidden");
+	renderRenderbody(solutionIndex);
+	randomizeChoiceButtons(buttons, randomChoice);
+}
+
+//fect('http://192.168.0.108:8000/Modul2.json');
 //Start Button
 document.getElementById("form_button").addEventListener('click', () =>{
 	var sel = document.getElementById("menuform").value;
-	if (sel !== 'Modul') {
-		menu.classList.add("hidden");
-		quiz.classList.remove("hidden");
-		renderRenderbody(solutionIndex);
+	const mod2Addr= 'http://192.168.0.108:8000/Modul2.json'; 
+	const mod1Addr= 'http://192.168.0.108:8000/Modul1.json'; 
+
+	if(sel === 'Bassschlüssel'){
+		localStorage.clear();
+		fetchRequest(mod2Addr);
 	}
-	else
-	{
+	if(sel === 'Violinschlüssel'){
+		localStorage.clear();
+		fetchRequest(mod1Addr);
+	}
+	if (sel !== 'Modul') {
 		form.classList.add("main__choicebox--redLine");
 	}
-})
+	
+});
 
 //Restart Button
 document.getElementById("statistic__button").addEventListener('click', () =>{
@@ -162,7 +183,8 @@ document.getElementById("statistic__button").addEventListener('click', () =>{
 });
 
 // Quiz Buttons
-document.getElementById("main__choicebox").addEventListener('click', function(event){
+function responseButtons(){
+	document.getElementById("main__choicebox").addEventListener('click', function(event){
 	let elem = event.target.id;
 
 	if(elem === buttons[0]){
@@ -182,3 +204,4 @@ document.getElementById("main__choicebox").addEventListener('click', function(ev
 		handleButton(buttonText);
 	}
 });
+}

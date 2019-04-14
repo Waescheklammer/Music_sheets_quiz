@@ -13,17 +13,7 @@ h2{
 	text-align: center;
 	font-size: 2.5rem;
 }
-@media only screen and (min-width: 990px){
-	#container{
-		grid-template-areas: 
-			'header'
-			'ad'
-			'ad'
-			'footer footer';
-		grid-template-columns: auto;
-		grid-template-rows: 10% auto auto 10%;
-	}
-}
+
 #container{
 	height: 100%;
 	display: grid;
@@ -211,3 +201,16 @@ progress[value]::-webkit-progress-value {
 	padding: 10%;
 }
 .hidden{display: none;}
+
+
+@media only screen and (min-width: 1000px){
+	#container{
+		background-color: white;
+		grid-template-areas: 
+			'header header'
+			'main ad'
+			'footer footer';
+		grid-template-columns: auto 30%;
+		grid-template-rows: 10% auto 10%;
+	}
+}
