@@ -1,40 +1,60 @@
+"use strict";
 /*
 ---------------------------------------------------------------------------------------
  								* IST NOCH MACARONI CODE *
+ 								Nur Versuch, noch nichts geordnet nach MVC
  --------------------------------------------------------------------------------------
+
+										TODO
+								*Promise für Installation + Button
+								*Button LösungenText
+								*Noten anzeigen/Mit Lösungen verbinden
+								*Desktop CSS Layout
  */
 
+let menu = document.getElementById("main__menu");
+let quiz = document.getElementById("main__quiz");
+let form = document.getElementById("menuform");
+let stat = document.getElementById("main__statistic");
+let choice = document.getElementById("main__choicebox");
+let jP = document.getElementById("Jens"); //Span Pseudo-Element für Text der Statistikanzeige
+let progBar = document.getElementById("progress");
+
+let randomChoice = [0,1,2,3];
+let buttons=["choiceButton1", "choiceButton2", "choiceButton3", "choiceButton4"];
+
+let solutionIndex = 0; //Fragen/Antworten-Katalog Index
+let Correct=0; //Richtige Antwortenzähler
 
 
 
-/*
- * Description
- document.addEventListener('click', function(event){
-	if(event.target.matches("choiceButton1"))
-	{
-		console.log("BH");
-	}
-});
+//---------------------------
+//			FETCH JSON
+//---------------------------
+
+const tempfetchAddr= 'http://141.56.236.191:8000/Modul1.json'; 
+const fetchAddr = 'http://192.168.0.108:8000/Modul1.json'; //IP Adresse von Hostserver(lokaler Webserver)
+function fetchRequest(addr){
+			fetch(addr).then(response => {
+			  return response.json();
+			}).then(data => {
+				localStorage.setItem("notes", JSON.stringify(data.notes));
+				localStorage.setItem("solution", JSON.stringify(data.solution));
+			}).catch(err => {
+			  // Do something for an error here
+			});
+		}
+
+
+fetchRequest(fetchAddr);
 
 
 
+//---------------------------
+//		Render Buttons
+//---------------------------
 
-var vf = new Vex.Flow.Factory({
-  renderer: {elementId: 'main__renderbody', width: 500, height: 200}
-});
-
-var score = vf.EasyScore();
-var system = vf.System();
-
-system.addStave({
-  voices: [
-    score.voice(score.notes('C#5/q, B3, A3, G#3', {stem: 'up'})),
-    score.voice(score.notes('C#4/h, C#4', {stem: 'down'}))
-  ]
-}).addClef('treble').addTimeSignature('4/4').setStyle({strokeStyle: "blue"});
-
-vf.draw();
- */
+//random anordnen von Button-Text-Array ( Heißt anscheinend shuffling)
 function shuffle(arra1) {
     var ctr = arra1.length, temp, index;
     while (ctr > 0) {
@@ -47,13 +67,11 @@ function shuffle(arra1) {
     return arra1;
 }
 
-var randomChoice = [0,1,2,3];
 randomChoice = shuffle(randomChoice);
-var buttons=["choiceButton1", "choiceButton2", "choiceButton3", "choiceButton4"];
 
-
+//Rendert Buttontexte zufällig an
 function randomizeChoiceButtons(buttons, randomDec){
-	var choices=["A", "B", "C", "D"];
+	let choices=["A", "B", "C", "D"];
 	for(let i=0; i< buttons.length; ++i){
 		document.getElementById(buttons[i]).innerHTML=choices[randomDec[i]];
 	}	
@@ -62,39 +80,154 @@ function randomizeChoiceButtons(buttons, randomDec){
 randomizeChoiceButtons(buttons, randomChoice);
 
 
-var json = {
-	"notes": ["A", "C", "B", "C", "J"],
-	"solution": [1,2,3,0,1]
-};
 
-function fetchRequest(){
-					// Replace ./data.json with your JSON feed
-			fetch('http://192.168.0.108:8000/Modul1.json').then(response => {
-			  return response.json();
-			}).then(data => {
-			  // Work with JSON data here
-				localStorage.setItem("notes", JSON.stringify(data.notes));
-				localStorage.setItem("solution", JSON.stringify(data.solution));
-			}).catch(err => {
-			  // Do something for an error here
-			});
+
+//---------------------------
+//		Note rendering
+//---------------------------
+
+//VF = Vex.Flow;
+
+// Create an SVG renderer and attach it to the DIV element named "boo".
+var canvas = document.getElementById("VexBody")
+//var renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
+var renderer = new Vex.Flow.Renderer(canvas, Vex.Flow.Renderer.Backends.CANVAS);
+
+// Configure the rendering context.
+renderer.resize(410, 150); //in CSS class für responsive 100%
+var context = renderer.getContext();
+context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
+
+// Create a stave of width 400 at position 10, 40 on the canvas.
+var stave = new Vex.Flow.Stave(10, 40, 370); //Beeiflusst ebenfalls die Groeße
+
+// Add a clef and time signature.
+stave.addClef("treble");//.addTimeSignature("4/4"); //addClef("bass")
+
+// Connect it to the rendering context and draw!
+stave.setContext(context).draw();
+
+var notes = [
+  // A quarter-note C.
+  new Vex.Flow.StaveNote({clef: "treble", keys: ["c/4"], duration: "q" }),
+
+  // A quarter-note D.
+  new Vex.Flow.StaveNote({clef: "treble", keys: ["d/4"], duration: "q" }),
+
+  // A quarter-note rest. Note that the key (b/4) specifies the vertical
+  // position of the rest.
+  new Vex.Flow.StaveNote({clef: "treble", keys: ["b/4"], duration: "q" }),
+
+  // A C-Major chord.
+  new Vex.Flow.StaveNote({clef: "treble", keys: ["c/4", "e/4", "g/4"], duration: "q" })
+];
+
+// Create a voice in 4/4 and add above notes
+var voice = new Vex.Flow.Voice({num_beats: 4,  beat_value: 4});
+voice.addTickables(notes);
+
+// Format and justify the notes to 400 pixels.
+var formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 400);
+
+// Render voice
+voice.draw(context, stave);
+
+//Rendert (später) Notenanzeige
+function renderRenderbody(solutionIndex){
+	let textArr=JSON.parse(localStorage.getItem("notes"));
+	document.getElementById("renderParagraph").innerHTML= textArr[solutionIndex];
+}
+
+renderRenderbody(solutionIndex);
+
+
+
+//---------------------------
+//		EventListeners
+//---------------------------
+
+let solutionValue = JSON.parse(localStorage.getItem("solution"));
+
+//Setzt nächsten Rendering Content zusammen/ wechselt zur nächsten Seite & summiert richtige Antworten
+function handleButton(event){
+	let h = JSON.parse(localStorage.getItem("solution"));
+
+	let lastPage = () => {
+		jP.innerHTML = Correct +"/4";
+		quiz.classList.add("hidden");
+		stat.classList.remove("hidden");	
+	}
+
+	let nextPage = () =>{
+		randomChoice = shuffle(randomChoice);
+		randomizeChoiceButtons(buttons, randomChoice);
+		solutionIndex+=1;
+		progBar.value += 10;
+		renderRenderbody(solutionIndex);
+	}
+
+
+	if (event === solutionValue[solutionIndex]) {
+		if(solutionIndex === 3){
+			Correct+=1;
+			lastPage();	
 		}
+		else
+		{
+			Correct+=1; //BUG?
+			nextPage();
+		}
+	}
+	else{
+		if(solutionIndex === 3){lastPage();}
+		else
+		{nextPage();}
+	}
+}
 
-fetchRequest();
+//Start Button
+document.getElementById("form_button").addEventListener('click', () =>{
+	var sel = document.getElementById("menuform").value;
+	if (sel !== 'Modul') {
+		menu.classList.add("hidden");
+		quiz.classList.remove("hidden");
+		renderRenderbody(solutionIndex);
+	}
+	else
+	{
+		form.classList.add("main__choicebox--redLine");
+	}
+})
 
-document.getElementById(buttons[0]).addEventListener('click', function(){
-	var h = JSON.parse(localStorage.getItem("solution"));
-	if (this.innerHTML === h[1]) {console.log("RICHTIG")}
-		else{console.log("FALSCH" +h[1]);}
-
+//Restart Button
+document.getElementById("statistic__button").addEventListener('click', () =>{
+	menu.classList.remove("hidden");
+	stat.classList.add("hidden");
+	form.value="Modul";
+	form.classList.remove("main__choicebox--redLine");
+	solutionIndex=0;
+	Correct=0;
+	progBar.value="0";
 });
 
+// Quiz Buttons
+document.getElementById("main__choicebox").addEventListener('click', function(event){
+	let elem = event.target.id;
 
-
-window.addEventListener('click', function(event){
-	if(event.target.id === buttons[0]){
-		var h = JSON.parse(localStorage.getItem("solution"));
-		if (this.innerHTML === h[1]) {console.log("RICHTIG")}
-		else{console.log("FALSCH" +h[1]);}
+	if(elem === buttons[0]){
+		let buttonText = document.getElementById(buttons[0]).innerHTML;
+		handleButton(buttonText);
+	}
+	if(elem === buttons[1]){
+		let buttonText = document.getElementById(buttons[1]).innerHTML;
+		handleButton(buttonText);
+	}
+	if(elem === buttons[2]){
+		let buttonText = document.getElementById(buttons[2]).innerHTML;
+		handleButton(buttonText);
+	}
+	if(elem === buttons[3]){
+		let buttonText = document.getElementById(buttons[3]).innerHTML;
+		handleButton(buttonText);
 	}
 });
