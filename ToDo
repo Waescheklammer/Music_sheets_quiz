@@ -1,6 +1,7 @@
 JS: 
-    - Vexflow nimmt JSON von Webserver entgegen per local storage (Modul 1)
-    - Vexflow Unterscheidung zw. Violin- und Bassschlüssel
+    - VexFlow nimmt JSON von Webserver entgegen per local storage (Modul 1)
+    - VexFlow Unterscheidung zw. Violin- und Bassschlüssel
+    - VexFlow Fenstergröße momentan fest in JS definiert ->nicht responsive
     - ServiceWorker zum cachen, damit Website offline verfügbar
     - Optional: Subtraktion bei Fehler im Fortschrittsbalken
     
