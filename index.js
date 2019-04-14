@@ -94,7 +94,7 @@ var canvas = document.getElementById("VexBody")
 var renderer = new Vex.Flow.Renderer(canvas, Vex.Flow.Renderer.Backends.CANVAS);
 
 // Configure the rendering context.
-renderer.resize(410, 410); //in CSS class für responsive 100%
+renderer.resize(410, 150); //in CSS class für responsive 100%
 var context = renderer.getContext();
 context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
 
