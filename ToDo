@@ -2,6 +2,7 @@ JS:
     - Vexflow nimmt JSON von Webserver entgegen per local storage (Modul 1)
     - Vexflow Unterscheidung zw. Violin- und Bassschlüssel
     - ServiceWorker zum cachen, damit Website offline verfügbar
+    - Optional: Subtraktion bei Fehler im Fortschrittsbalken
     
 CSS:
     - Responsive Design
