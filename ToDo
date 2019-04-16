@@ -1,5 +1,6 @@
 JS: 
     - VexFlow nimmt JSON von Webserver entgegen per local storage (Modul 1)
+    -->VeFlow soll nur eine Note anzeigen
     - Noten anzeigen/Mit Lösungen verbinden
     - VexFlow Unterscheidung zw. Violin- und Bassschlüssel
     - VexFlow Fenstergröße momentan fest in JS definiert ->nicht responsive
