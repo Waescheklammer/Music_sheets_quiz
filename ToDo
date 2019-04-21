@@ -4,6 +4,7 @@ JS:
     - VexFlow Fenstergröße momentan fest in JS definiert ->nicht responsive
         ->mögliche Lösung: https://github.com/0xfe/vexflow/issues/590
     - ServiceWorker zum cachen, damit Website offline verfügbar
+    - neue Lernmodule sollten sich von einem Webserver per Ajax laden lassen
     
 HTML:
     - Oberfläche verschönern
