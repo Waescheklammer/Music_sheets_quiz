@@ -14,9 +14,9 @@
 		<header id="header">
 			<h1>Noten</h1>
 		</header>
-		<main id="main">
-			<section id="main__menu" class=""> 
-				<h2>Wähle ein Modul</h2>
+		<main "id="main">
+			<section id="main__menu" class="">
+				<h2 id="menu__h2">Wähle ein Modul</h2>
 				<div id="menu__container" class="menu__container">
 					<div class="menu__form">
 						<form >
@@ -30,38 +30,40 @@
 					<button id="form_button" class="">Start</button>
 				</div>
 			</section>
-			<section id="main__quiz" class="hidden"><!--Entfernen falls Startbutton-->
+			<section id="main__quiz" class="hidden">
 				<div class="quiz__progressbox">
 					<progress id="progress" value="0" max="40" class="quiz__progressbar"></progress>
 				</div>
-				<!--<div id="quiz__renderbody" class="quiz__renderbody"></div>
-					<p style="text-align:center; font-size:5rem;"  id="renderParagraph"></p>-->
-				<canvas id="VexBody"></canvas> <!--FensterGroeße macht noch Probleme-->
+				
+				<canvas id="VexBody" class="quiz__renderbody"></canvas> 
 				<hr>
 				<h2>Wählen sie eine Lösungsmöglichkeit aus</h2>
 				<div class="main__choicebox" id="main__choicebox">
-					<button class="choiceButton1" id="choiceButton1">A</button>
-					<button class="choiceButton2" id="choiceButton2">B</button>
-					<button class="choiceButton3" id="choiceButton3">C</button>
-					<button class="choiceButton4" id="choiceButton4">D</button>
+					<button class="choiceButton1" id="choiceButton1"></button>
+					<button class="choiceButton2" id="choiceButton2"></button>
+					<button class="choiceButton3" id="choiceButton3"></button>
+					<button class="choiceButton4" id="choiceButton4"></button>
 				</div>
 			</section>
 			<section id="main__statistic" class="hidden">
 				<div id="statistic__container">
 					<h2>Dein Ergebnis</h2>
 					<span id="Jens" style="text-align: center; font-size: 5rem"></span>
-					<button class="statistic__button" id="statistic__button">Zurück zum Menu </button>
+					<button class="statistic__button" id="statistic__button"><a href="">Zurück zum Menu</a></button>
 				</div>
 			</section>
 		</main>
-		<!--<footer id="footer">
+		<section id="ad">
+			<h2>WERBUNG</h2>
+		</section>
+		<footer id="footer">
 			<ul>
 				<li><a href="">Impressum</a></li>
 				<li><a href="">Kontakt</a></li>
 				<li><a href="">Service</a></li>
 				<li><button id="footerButton" >Add To Homescreen</button></li>
 			</ul>
-		</footer>-->
+		</footer>
 	</section>
 	<script type="text/javascript" src="index.js"></script>
 </body>
