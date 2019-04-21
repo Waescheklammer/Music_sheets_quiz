@@ -1,20 +1,13 @@
 JS: 
     - VexFlow nimmt JSON von Webserver entgegen per local storage (Modul 1)
-    -->VeFlow soll nur eine Note anzeigen
-    - Noten anzeigen/Mit Lösungen verbinden
-    - VexFlow Unterscheidung zw. Violin- und Bassschlüssel
+    - Noten anzeigen/Mit Lösungen verbinden   
     - VexFlow Fenstergröße momentan fest in JS definiert ->nicht responsive
         ->mögliche Lösung: https://github.com/0xfe/vexflow/issues/590
     - ServiceWorker zum cachen, damit Website offline verfügbar
-    - Optional: Subtraktion bei Fehler im Fortschrittsbalken
-    - nach MVC ordnen
-    
-CSS:
-    - Responsive Design
-    - Desktop CSS Layout
     
 HTML:
-    - Lösungsmöglichkeiten überarbeiten ->in JS per String ausführen
+    - Oberfläche verschönern
+    - VexFlow Source nicht offline zugänglich
 
 BUGS:
-    - nach dem Neuladen verringert sich der Statusbalken um 1
+    - Statusbalken teilweise schon nach weniger als 4 Antworten durchgelaufen
