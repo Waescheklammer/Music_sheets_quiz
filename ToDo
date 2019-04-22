@@ -1,8 +1,6 @@
 JS: 
     - VexFlow nimmt JSON von Webserver entgegen per local storage (Modul 1)
-    - Noten anzeigen/Mit Lösungen verbinden   
-    - VexFlow Fenstergröße momentan fest in JS definiert ->nicht responsive
-        ->mögliche Lösung: https://github.com/0xfe/vexflow/issues/590
+    - VexFlow Fenstergröße momentan fest in JS definiert ->Anscheinend nicht modifizierbar (ggf. nachfragen)
     - ServiceWorker zum cachen, damit Website offline verfügbar
     - neue Lernmodule sollten sich von einem Webserver per Ajax laden lassen
     
