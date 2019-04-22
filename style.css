@@ -117,8 +117,8 @@ progress[value]::-webkit-progress-value {
 #main__quiz{}
 
 .quiz__renderbody{
-	margin-top: 30%;
-	height: 80%;
+	margin-top: 50%;
+	height: 50%;
 }
 .main__choicebox{
 	margin-top: 10%;

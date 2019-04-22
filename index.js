@@ -110,20 +110,22 @@ function renderNotes(type){
 	//var note = localStorage.getItem("notes");
 
 	//lokale Definition bis Schnittstelle klar
-	var note = "g/4";
+	var note = "C/4";
 	
 	// Create an SVG renderer and attach it to the DIV element named "boo".
-	var canvas = document.getElementById("VexBody")
-	//var renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
-	var renderer = new Vex.Flow.Renderer(canvas, Vex.Flow.Renderer.Backends.CANVAS);
+	var div = document.getElementById("VexBody")
+	var renderer = new Vex.Flow.Renderer(div, Vex.Flow.Renderer.Backends.SVG);
+	//var renderer = new Vex.Flow.Renderer(canvas, Vex.Flow.Renderer.Backends.CANVAS);
 
 	// Configure the rendering context.
-	renderer.resize(410, 150); //in CSS class für responsive 100%
+	renderer.resize(600, 200); //in CSS class für responsive 100%
+	
 	var context = renderer.getContext();
+	//context.scale(1.5, 1.5); // scale X and Y Funktioniert nicht 
 	context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
-
+	
 	// Create a stave of width 400 at position 10, 40 on the canvas.
-	var stave = new Vex.Flow.Stave(10, 40, 570); //Beeiflusst ebenfalls die Groeße
+	var stave = new Vex.Flow.Stave(440, 80, 100); //Beeiflusst ebenfalls die Groeße
 
 	// Add a clef and time signature.
 	stave.addClef(clef);//.addTimeSignature("4/4"); 
@@ -146,6 +148,7 @@ function renderNotes(type){
 	// Render voice
 	voice.draw(context, stave);
 }
+
 //Rendert (später) Notenanzeige
 function renderRenderbody(solutionIndex){
 	let textArr=JSON.parse(localStorage.getItem("notes"));
