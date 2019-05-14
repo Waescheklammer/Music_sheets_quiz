@@ -21,11 +21,20 @@
 					<div class="menu__form">
 						<form >
 							<select id="menuform">
-								<option hidden="true">Modul</option>
+								<option hidden="true">Notenart</option>
 								<option>Violinschlüssel</option>
 								<option>Bassschlüssel</option>
 							</select>
+
 						</form>
+					</div>
+					<div class="menu__form2" id="menu__con2">
+						<select id="modulform">
+									<option hidden selected>Modul</option>
+									<option>Modul1</option>
+									<option>Modul2</option>
+									<option>Modul3</option>
+								</select>
 					</div>
 					<button id="form_button" class="">Start</button>
 				</div>
@@ -34,7 +43,8 @@
 				<div class="quiz__progressbox">
 					<progress id="progress" value="0" max="40" class="quiz__progressbar"></progress>
 				</div>
-				<div id="VexBody"></div> <!--class="quiz__renderbody" hat keinen Einfluss auf VexFlow, schafft nur Freiraum über dem canvas--> 
+				
+				<canvas id="VexBody" class="quiz__renderbody"></canvas> 
 				<hr>
 				<h2>Wählen sie eine Lösungsmöglichkeit aus</h2>
 				<div class="main__choicebox" id="main__choicebox">
@@ -47,8 +57,9 @@
 			<section id="main__statistic" class="hidden">
 				<div id="statistic__container">
 					<h2>Dein Ergebnis</h2>
-					<span id="Jens" style="text-align: center; font-size: 5rem"></span>
-					<button class="statistic__button" id="statistic__button"><a href="">Zurück zum Menu</a></button>
+					<span id="Jens" ></span>
+					<span id="Wrongs"></span>
+					<button class="statistic__button" id="statistic__button"><a href="javascript:window.location.reload(true)">Zurück zum Menu</a></button>
 				</div>
 			</section>
 		</main>

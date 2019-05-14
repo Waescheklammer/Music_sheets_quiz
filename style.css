@@ -13,16 +13,21 @@ h2{
 	text-align: center;
 	font-size: 2.5rem;
 }
-@media only screen and (min-width: 990px){
-	#container{
-		grid-template-areas: 
-			'header'
-			'ad'
-			'ad'
-			'footer footer';
-		grid-template-columns: auto;
-		grid-template-rows: 10% auto auto 10%;
-	}
+a{
+	color: white;
+	text-decoration: none;
+}
+a:hover{
+	color: white;
+	text-decoration: none;	
+}
+a:active{
+	color: white;
+	text-decoration: none;
+}
+a:focus{
+	color: white;
+	text-decoration: none;
 }
 #container{
 	height: 100%;
@@ -86,9 +91,10 @@ progress[value]::-webkit-progress-value {
 	display: grid;
 	grid-template-areas: 
 		'form'
+		'form2'
 		'button';
 	justify-content: center;
-	grid-template-rows:  auto 40%;
+	grid-template-rows:  auto auto 40%;
 }
 .menu__container > h2{
 	margin-top: 10%;
@@ -96,6 +102,17 @@ progress[value]::-webkit-progress-value {
 .menu__form{
 	grid-area: 'form';
 	margin-top: 5%;	
+}
+.menu__form2{
+	margin-top: 5%;
+	grid-area: 'form2';
+}
+.menu__form2 > select{
+	font-size: 2.5rem;
+	border-radius: 10px;
+	background-color: #4B77D1;
+	color: white;
+	padding: 30px;
 }
 .menu__form > form > select{
 	font-size: 2.5rem;
@@ -114,11 +131,13 @@ progress[value]::-webkit-progress-value {
 	padding: 30px;
 	margin-bottom:  20%;
 }
-#main__quiz{}
+#main__quiz{
 
+}
 .quiz__renderbody{
-	margin-top: 50%;
-	height: 50%;
+	margin-top: 30%;
+	height: 80%;
+	margin-left: 30%;
 }
 .main__choicebox{
 	margin-top: 10%;
@@ -160,8 +179,9 @@ progress[value]::-webkit-progress-value {
 	grid-template-areas: 
 		'paragraph'
 		'span'
+		'span'
 		'button';
-	grid-template-rows: 30% auto 10%;
+	grid-template-rows: 30% auto auto 10%;
 	justify-content: center;
 }
 #statistic__container > h2{
@@ -169,6 +189,8 @@ progress[value]::-webkit-progress-value {
 }
 #statistic__container > span{
 	grid-area: span;
+	text-align: center;
+	font-size: 3rem;
 }
 .statistic__button{
 	grid-area: button;
@@ -186,7 +208,7 @@ progress[value]::-webkit-progress-value {
 	margin-bottom: 1%
 }
 #footer{
-	border-top: 1px solid black;
+	border-top: 1px solid grey;
 	grid-area: footer;
 }
 #footer > ul > li{
@@ -210,3 +232,84 @@ progress[value]::-webkit-progress-value {
 	padding: 10%;
 }
 .hidden{display: none;}
+
+
+@media only screen and (min-width: 1000px){
+	h1{
+		margin-left: 5%;
+		text-align: left;
+		font-size: 2rem;
+	}
+	#container{
+
+		grid-template-areas: 
+			'header header'
+			'main ad'
+			'footer footer';
+		grid-template-columns: auto 20%;
+		grid-template-rows: 10% auto 10%;
+	}
+	#header{
+		margin-bottom: 0%;
+	}
+	#main__menu{
+		margin-top: 5%;
+	}
+	.menu__container{
+		padding-top: 0%;
+	}
+	.menu__container>h2{
+		margin-top: 0%;
+	}
+	.menu__container>button{
+		font-size: 1.0rem;
+		padding: 10px;
+	}
+	.menu__form{
+		margin-top: 0%;
+	}
+	.menu__form > form > select{
+		font-size: 1rem;
+		padding: 10px;
+	}
+	#main__quiz>h2{
+		font-size: 1.0rem;
+	}
+	.quiz__renderbody{
+		margin-top: 0%;
+	}
+	progress[value]{
+		height: 15px;
+	}
+	.main__choicebox{
+		margin-top: 5%;
+		grid-template-columns: 20% 20%;
+		grid-template-rows: 100% 100%;
+	}
+	.main__choicebox>button{
+		font-size: 1.0rem;
+
+
+	}
+	#statistic__container{
+		margin-top: 5%;
+	}
+	#statistic__container>h2{
+		font-size: 1.5rem;
+	}
+	.statistic__button{
+		font-size: 1.0rem;
+	}
+	#ad{
+		border-left: 1px grey solid;
+	}
+	#footer > ul > li{
+		font-size: 1.0rem;
+		margin-left: 10%;
+	}
+	#footer > ul > li>button{
+		font-size: 1.0rem;
+		padding: 2px;
+	}
+
+}
