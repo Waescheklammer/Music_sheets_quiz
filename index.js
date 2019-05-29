@@ -112,40 +112,38 @@ function main(){
 		
 	}
 
-	function renderNotes(type){
-			//Holt sich Clef aus dem Optionsmenü im HTML
+	function renderNotes(type) {
+		//Holt sich Clef aus dem Optionsmenü im HTML
 		let noteType;
 		let h = JSON.parse(localStorage.getItem("solution"));
 		let accordArray = [];
-		if(h[solutionIndex].length > 1)
-		{
+		if (h[solutionIndex].length > 1) {
 			accordArray = arraysplit(h[solutionIndex]);
 		}
-		else
-		{
+		else {
 			accordArray = h[solutionIndex];
 		}
-		let note =[];
-			if(type==1){
-				noteType="bass"
-				for(let i=0; i<accordArray.length;++i){
-					note[i] = accordArray[i] +"/3";
-				}
+		let note = [];
+		if (type == 1) {
+			noteType = "bass"
+			for (let i = 0; i < accordArray.length; ++i) {
+				note[i] = accordArray[i] + "/3";
 			}
-			if(type==2){
-				noteType="treble"
-				for(let i=0; i<accordArray.length;++i){
-					note[i] = accordArray[i] +"/5";
-				}
+		}
+		if (type == 2) {
+			noteType = "treble"
+			for (let i = 0; i < accordArray.length; ++i) {
+				note[i] = accordArray[i] + "/5";
 			}
+		}
 
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~Nachricht für Ben~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//-------------------------------------------------------------------------------------------
-//|				note ist Array der Noten.Dort wo eingestellt wird wie viele					|
-//|				Noten gerendert werden, muss  es in schleife nach note.length gepackt werden|
-//-------------------------------------------------------------------------------------------
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~Nachricht für Ben~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		//-------------------------------------------------------------------------------------------
+		//|				note ist Array der Noten.Dort wo eingestellt wird wie viele					|
+		//|				Noten gerendert werden, muss  es in schleife nach note.length gepackt werden|
+		//-------------------------------------------------------------------------------------------
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 		var clef = noteType;
@@ -158,31 +156,39 @@ function main(){
 		var renderer = new Vex.Flow.Renderer(canvas, Vex.Flow.Renderer.Backends.CANVAS);
 
 		// Configure the rendering context.
-		renderer.resize(410, 200); //in CSS class für responsive 100%
+		renderer.resize(120, 150); //in CSS class für responsive 100%
 		var context = renderer.getContext();
-		context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
-
+		
+		//----vvv----------FEHLER------------vvv------
+		context.setViewBox(20, 20, 85, 85).setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
+		//------------------^^^^---------------------
+		
 		// Create a stave of width 400 at position 10, 40 on the canvas.
-		var stave = new Vex.Flow.Stave(10, 40, 570); //Beeiflusst ebenfalls die Groeße
+		var stave = new Vex.Flow.Stave(20, 20, 100); //Beeiflusst ebenfalls die Groeße
 
-		// Add a clef and time signature.
 		stave.addClef(clef);//.addTimeSignature("4/4"); 
-
-		// Connect it to the rendering context and draw!
 		stave.setContext(context).draw();
-		var notes = [
-			// A whole-note.
-			new Vex.Flow.StaveNote({clef: clef, keys: [note[0]], duration: "w" })
-		];
-
-		// Create a voice in 1/1 and add above notes
-		var voice = new Vex.Flow.Voice({num_beats: 1,  beat_value: 1});
+		console.log("Noch da");
+		if (note.length == 1) {
+			console.log("H");
+			var notes = [
+				// A whole-note.
+				new Vex.Flow.StaveNote({ clef: clef, keys: [note[0]], duration: "w" })
+			];
+			// Create a voice in 1/1 and add above notes
+			var voice = new Vex.Flow.Voice({ num_beats: 1, beat_value: 1 });
+		}
+		else {
+			console.log("HE");
+			var notes = [];
+			for(i=0; i<note.length; i++){
+				notes.push(new Vex.Flow.StaveNote({ clef: clef, keys: [note[i]], duration: "q" }))
+			}
+			var voice = new Vex.Flow.Voice({ num_beats: note.length, beat_value: note.length });
+		}
+		console.log("HA")
 		voice.addTickables(notes);
-
-		// Format and justify the notes to 400 pixels.
 		var formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 400);
-
-		// Render voice
 		voice.draw(context, stave);
 	}
 
