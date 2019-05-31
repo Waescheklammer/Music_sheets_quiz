@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Akkorde lernen</title>
+	<title>NotenTrainer</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="manifest" href="Manifest.json">
 	<link rel="icon" type="image/png" href="icon.png">
 	<meta name="theme-color" content="transparent">
 	<script type="text/javascript" src="https://unpkg.com/vexflow/releases/vexflow-min.js"></script>
+	<script src="https://d3js.org/d3.v5.min.js"></script>
 </head>
 <body>
 	<section id="container">
 		<header id="header">
-			<h1>Noten</h1>
+			<h1>Trainiere ganz ohne Zeitdruck</h1>
 		</header>
 		<main "id="main">
 			<section id="main__menu" class="">
@@ -21,7 +22,7 @@
 					<div class="menu__form">
 						<form >
 							<select id="menuform">
-								<option hidden="true">Notenart</option>
+								<option hidden="true">Schlüssel</option>
 								<option>Violinschlüssel</option>
 								<option>Bassschlüssel</option>
 							</select>
@@ -31,20 +32,19 @@
 					<div class="menu__form2" id="menu__con2">
 						<select id="modulform">
 									<option hidden selected>Modul</option>
-									<option>Modul1</option>
-									<option>Modul2</option>
-									<option>Modul3</option>
-								</select>
+									<option>Einzelnote</option>
+									<option>Akkorde</option>
+						</select>
 					</div>
 					<button id="form_button" class="">Start</button>
 				</div>
 			</section>
 			<section id="main__quiz" class="hidden">
 				<div class="quiz__progressbox">
-					<progress id="progress" value="0" max="40" class="quiz__progressbar"></progress>
+					<progress id="progress" value="0" max="100" class="quiz__progressbar"></progress>
 				</div>
 				
-				<canvas id="VexBody" class="quiz__renderbody"></canvas> 
+				<div id="VexBody" class="quiz__renderbody"></div> <!-- class="quiz__renderbody"--> <!--Skalierung fkt. mit dem VexFlow Renderer nicht gut-->
 				<hr>
 				<h2>Wählen sie eine Lösungsmöglichkeit aus</h2>
 				<div class="main__choicebox" id="main__choicebox">
