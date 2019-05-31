@@ -129,14 +129,14 @@ function main() {
 		var noteString = "";
 		noteString = a;
 
-		//Falls Bass, dann Dekrement z.B. C4 -> C3 !Aufgabenstellung in GitHub ist hier anscheinend falsch
+		//Falls Bass, dann Dekrement z.B. C4 -> C2
 		if (type == 1) {
 			var i;
 			var y = "";
 			for (i = 0; i < noteString.length; i++) {
 				let x = noteString.charAt(i);
 				if (x >= '0' && x <= '9') {
-					y = x - 1;
+					y = x - 2;
 					noteString = setCharAt(noteString, i, y);
 				}
 			}
